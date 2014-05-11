@@ -6,7 +6,8 @@
     <ProjectGuid>{18c16971-aee8-4c2f-af23-4ceb4f807312}</ProjectGuid>
     <ProjectHome />
     <ProjectView>ShowAllFiles</ProjectView>
-    <StartupFile>app.js_old</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
@@ -19,20 +20,18 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="app.ts" />
     <Content Include="package.json" />
-    <TypeScriptCompile Include="app2.ts" />
-    <Compile Include="app.js_old" />
     <Compile Include="Gruntfile.js" />
+    <TypeScriptCompile Include="config\database.ts" />
     <TypeScriptCompile Include="routes\routes.ts" />
-    <Compile Include="routes\index.js" />
-    <Compile Include="routes\routes.js" />
-    <Compile Include="routes\users.js" />
     <Content Include="public\stylesheets\style.css" />
     <TypeScriptCompile Include="typings\express\express.d.ts" />
     <TypeScriptCompile Include="typings\node\node.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />
+    <Folder Include="config\" />
     <Folder Include="public" />
     <Folder Include="public\images" />
     <Folder Include="public\javascripts" />

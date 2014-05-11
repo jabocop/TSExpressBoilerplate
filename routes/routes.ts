@@ -12,4 +12,10 @@ export function users(req: express.Request, res: express.Response) {
 };
 
 
+export function login(req: any, res: express.Response) {
+	// render the page and pass in any flash data if it exists
+    res.render('login');
+};
+
+
 

@@ -1,16 +1,20 @@
 var express = require('express');
 var path = require('path');
-
 var routes = require('./routes/routes');
+
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
+var flash = require('express-flash');
 
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hjs');
+app.set('view engine', 'ejs');
 
 app.use(favicon());
 
@@ -19,9 +23,14 @@ app.use(bodyParser());
 app.use(cookieParser());
 app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'mySecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 app.get('/', routes.index);
 app.get('/users', routes.users);
+app.get('/login', routes.login);
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-    var files = ['routes/**/*.ts','*.ts'];
+    var files = ['routes/**/*.ts','config/**/*.ts','*.ts'];
 
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-watch');

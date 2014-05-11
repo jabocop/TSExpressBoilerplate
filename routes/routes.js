@@ -9,4 +9,10 @@ function users(req, res) {
 }
 exports.users = users;
 ;
+
+function login(req, res) {
+    res.render('login');
+}
+exports.login = login;
+;
 //# sourceMappingURL=routes.js.map
