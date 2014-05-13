@@ -4,10 +4,12 @@ function index(req, res) {
 exports.index = index;
 ;
 
-function users(req, res) {
-    res.send("USERS2");
+function profile(req, res) {
+    res.render('profile', {
+        user: req.user
+    });
 }
-exports.users = users;
+exports.profile = profile;
 ;
 
 function login(req, res) {
@@ -20,5 +22,12 @@ function signup(req, res) {
     res.render('signup');
 }
 exports.signup = signup;
+;
+
+function logout(req, res) {
+    req.logout();
+    res.redirect('/');
+}
+exports.logout = logout;
 ;
 //# sourceMappingURL=routes.js.map

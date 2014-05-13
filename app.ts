@@ -4,13 +4,18 @@
 import express = require('express');
 import path = require('path');
 import routes = require('./routes/routes');
-import configDB = require('./config/database');
+var configDB = require('./config/database');
+
+var mongoose = require('mongoose');
+
+//TODO : Must be possible to type better
+mongoose.connect(configDB.url); // connect to our database
 
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+
 var passport = require('passport');
 var session  = require('express-session')
 var flash = require('express-flash');
@@ -34,9 +39,25 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+require('./config/passport')(passport);
+
 app.get('/', routes.index);
-app.get('/users', routes.users);
+app.get('/profile', checkAuthentication, routes.profile);
 app.get('/login', routes.login);
+app.get('/signup', routes.signup);
+app.get('/logout', routes.logout);
+
+// process the signup form
+app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile', // redirect to the secure profile section
+    failureRedirect: '/signup', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+}));
+app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile', // redirect to the secure profile section
+    failureRedirect: '/login', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+}));
 
 
 /// catch 404 and forwarding to error handler
@@ -71,3 +92,15 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+// route middleware to make sure a user is logged in
+function checkAuthentication(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}

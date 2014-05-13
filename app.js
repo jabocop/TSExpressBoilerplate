@@ -1,12 +1,17 @@
 var express = require('express');
 var path = require('path');
 var routes = require('./routes/routes');
+var configDB = require('./config/database');
+
+var mongoose = require('mongoose');
+
+mongoose.connect(configDB.url);
 
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+
 var passport = require('passport');
 var session = require('express-session');
 var flash = require('express-flash');
@@ -28,9 +33,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+require('./config/passport')(passport);
+
 app.get('/', routes.index);
-app.get('/users', routes.users);
+app.get('/profile', checkAuthentication, routes.profile);
 app.get('/login', routes.login);
+app.get('/signup', routes.signup);
+app.get('/logout', routes.logout);
+
+app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile',
+    failureRedirect: '/signup',
+    failureFlash: true
+}));
+app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
@@ -57,4 +77,11 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+function checkAuthentication(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+
+    res.redirect('/');
+}
 //# sourceMappingURL=app.js.map

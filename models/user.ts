@@ -5,8 +5,8 @@
 export interface IUserDocument extends mongoose.Document {
     email: string;
     password: string;
-
-    
+    generateHash(password: string): string;
+    validPassword(password: string): string;
 }
 
 // Model interface
@@ -26,7 +26,7 @@ var userSchema = new mongoose.Schema({
 
 
 //Statics
-/*
+
 userSchema.methods.generateHash = function generateHash(password: string): string {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 }
@@ -34,7 +34,7 @@ userSchema.methods.generateHash = function generateHash(password: string): strin
 
 userSchema.methods.validPassword = function validPassword(password: string): string {
     return bcrypt.compareSync(password, this.password);
-}*/
+}
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
