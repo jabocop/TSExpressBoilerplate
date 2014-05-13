@@ -15,4 +15,10 @@ function login(req, res) {
 }
 exports.login = login;
 ;
+
+function signup(req, res) {
+    res.render('signup');
+}
+exports.signup = signup;
+;
 //# sourceMappingURL=routes.js.map

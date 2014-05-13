@@ -21,9 +21,11 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="app.ts" />
+    <Content Include="models\user.ts" />
     <Content Include="package.json" />
     <Compile Include="Gruntfile.js" />
     <TypeScriptCompile Include="config\database.ts" />
+    <TypeScriptCompile Include="config\passport.ts" />
     <TypeScriptCompile Include="routes\routes.ts" />
     <Content Include="public\stylesheets\style.css" />
     <TypeScriptCompile Include="typings\express\express.d.ts" />
@@ -32,6 +34,7 @@
   <ItemGroup>
     <Folder Include="bin" />
     <Folder Include="config\" />
+    <Folder Include="models\" />
     <Folder Include="public" />
     <Folder Include="public\images" />
     <Folder Include="public\javascripts" />
